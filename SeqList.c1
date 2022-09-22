@@ -1,0 +1,196 @@
+//#include "SeqList.h"
+//
+//void SeqListInit(SeqList*  psl)
+//{
+//	assert(psl);
+//	psl->a = NULL;
+//	psl->capacity = psl->size= 0;
+//}
+//void SeqListDestory(SeqList* psl)
+//{
+//	assert(psl);
+//	free(psl->a);
+//	psl->a = NULL;
+//	psl->size = psl->capacity = 0;
+//}
+//void SLCheckCapaCity(SeqList* psl)
+//{
+//	if (psl->size == psl->capacity)
+//	{
+//		int newCapacity = psl->capacity == 0 ? 4 : psl->capacity * 2;
+//		SLDataType* tmp = (SLDataType*)relloc(psl->a, newCapacity * sizeof(SLDataType));
+//		if (tmp == NULL)
+//		{
+//			perror("relloc fail");
+//			exit(-1);
+//		}
+//		psl->a = tmp;
+//		psl->capacity = newCapacity;
+//	}
+//}
+//void SeqListPushBack(SeqList* psl, SLDataType x)
+//{
+//	assert(psl);
+//	void SLCheckCapaCity(psl);
+//
+//	////检查容量
+//	//if (psl->size == psl->capacity)
+//	//{
+//	//	int newCapacity = psl->capacity == 0 ? 4 : psl->capacity * 2;
+//	//	SLDataType* tmp = (SLDataType*)relloc(psl->a, newCapacity * sizeof(SLDataType));
+//	//	if (tmp == NULL)
+//	//	{
+//	//		perror("relloc fail");
+//	//		exit(-1);
+//	//	}
+//	//	psl->a = tmp;
+//	//	psl->capacity = newCapacity;
+//	//}
+//	psl->a[psl->size] = x;
+//	psl->size++;
+//}
+//void SeqListPushFront(SeqList* psl, SLDataType x)
+//{
+//	assert(psl);
+//	void SLCheckCapaCity(psl);
+//	int end = psl->size - 1;
+//	while (end >= 0)
+//	{
+//		psl->a[end + 1] = psl->a[end];
+//		--end;
+//	}
+//	psl->a[0] = x;
+//	psl->size++;
+//}
+//void SeqListpopBcak(SeqList* psl)
+//{
+//	assert(psl);
+//	//检查的检查
+//	if (psl->size==0)
+//	{
+//		return;
+//	}
+//	psl->size--;
+//}
+//
+//
+#include "SeqList.h"
+void SeqListCheckCapacity(SeqList* psl)
+{
+	//检查容量
+	if (psl->size == psl->capaCity)//满了
+	{
+		int newCapacity = psl->capaCity == 0 ? 4 : psl->capaCity * 2;
+		SLDataType* tmp = (SLDataType*)relloc(psl->a, newCapacity * sizeof(SLDataType));
+		if (tmp == NULL)//扩容失败
+		{
+			perror("relloc fail");
+			exit(-1);
+		}
+		psl->capaCity = newCapacity;
+		psl->a = tmp;
+	}
+}
+void SeqListInit(SeqList* psl)
+{
+	assert(psl);
+	psl->a = NULL;
+	psl->size = psl->capaCity = 0;
+}
+void SeqListDestory(SeqList* psl)
+{
+	assert(psl);
+	free(psl);
+	psl->a = NULL;
+	psl->size = psl->capaCity = 0;
+}
+void SeqListPushBack(SeqList* psl,SLDataType x)
+{
+	assert(psl);
+	void CheckCapaCity(psl);
+//	//检查容量
+//	if (psl->size == psl->capaCity)//满了
+//	{
+//		int newCapacity = psl->capaCity == 0 ? 4 : psl->capaCity * 2;
+//		SLDataType* tmp=(SLDataType*)relloc(psl->a, newCapacity * sizeof(SLDataType));
+//		if (tmp == NULL)//扩容失败
+//		{
+//			perror("relloc fail");
+//			exit(-1);
+//		}
+//		psl->capaCity = newCapacity;
+//		psl->a = tmp;
+//	}
+	psl->a[psl->size] = x;
+	psl->size++;
+}
+void SeqListPushFront(SeqList* psl, SLDataType x)
+{
+	assert(psl);
+	void CheckCapaCity(psl);
+	int end = psl->size - 1;
+	while (end >= 0)
+	{
+		psl->a[end + 1] = psl->a[end];
+		--end;
+	}
+	psl->a[0] = x;
+	psl->size++;
+}
+void SeqListPopBack(SeqList* psl)
+{
+	assert(psl);
+	psl->size--;
+	if (psl->size == 0)//判空
+	{
+		return;
+	}
+}
+void SeqListPopFront(SeqList* psl)
+{
+	assert(psl);
+	int begin = 0;
+	while (begin < psl->size - 1)
+	{
+		psl->a[begin] = psl->a[begin + 1];
+		begin++;
+	}
+	psl->size--;
+}
+void SeqListInsert(SeqList* psl, size_t pos, SLDataType x)
+{
+	void CheckCapacity(psl);
+	/*assert(psl);
+	assert(pos <= psl->size);
+	size_t end = psl->size-1;
+	while (end >=pos)//无符号数死循环
+	{
+		psl->a[end + 1] = psl->a[end];
+		end++;
+	}
+	psl->a[pos] = x;
+	psl->size++;*/
+	assert(pos <= psl->size);
+	size_t end = psl->size;
+	while (end > pos)
+	{
+		psl->a[end] = psl->a[end-1];
+		--end;
+	}
+	psl->a[pos] = x;
+	psl->size++;
+}
+void SeqListErase(SeqList* psl, size_t pos)
+{
+	assert(psl);
+	assert(pos < psl->size);
+	size_t begin = pos;
+	while (begin < psl->size - 1)//删后结束位置
+	{
+		psl->a[begin] = psl->a[begin + 1];//从前往后
+		++begin;
+	}
+	psl->size--;
+}
+
+
