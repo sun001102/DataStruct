@@ -37,3 +37,5 @@ void SeqListPopBack(SeqList* psl);
 void SeqListPopFront(SeqList* psl);
 void SeqListInsert(SeqList* psl,size_t pos,SLDataType x);
 void SeqListErase(SeqList* psl,size_t pos);
+void SeqListModify(SeqList* psl,size_t pos,SLDataType x);
+int SeqListFind(SeqList* psl,SLDataType x);

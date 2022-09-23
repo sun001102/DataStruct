@@ -74,7 +74,7 @@
 //}
 //
 //
-#include "SeqList.h"
+#include "SeqList.h1"
 void SeqListCheckCapacity(SeqList* psl)
 {
 	//¼ì²éÈÝÁ¿
@@ -191,6 +191,24 @@ void SeqListErase(SeqList* psl, size_t pos)
 		++begin;
 	}
 	psl->size--;
+}
+void SeqListModify(SeqList* psl,size_t pos,SLDataType x)
+{
+   assert(psl);
+   assert(pos<psl->size);
+   psl->a[pos]=x;
+}
+int SeqListFind(SeqList* psl,SLDataType x)
+{
+    assert(psl);
+   for(int i=0;i<psl->size;i++)
+{
+    if(psl->a[i]==x)
+   {
+      return i;
+   }
+}
+    return -1;
 }
 
 
