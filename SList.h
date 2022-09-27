@@ -17,3 +17,5 @@ void SListPopBack(SLNode** pphead);
 SLNode* SListFind(SLNode* pphead, SLTDataType x);
 void SListInsert(SLNode** pphead, SLNode* pos, SLTDataType x);
 void SListInsertAfter(SLNode* pos, SLTDataType x);
+void SListErase(SLNode** pphead, SLNode* pos);
+void SListEraseAfter(SLNode* pos);

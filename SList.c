@@ -127,3 +127,37 @@ void SListInsertAfter(SLNode* pos, SLTDataType x)
 	newnode->next = pos->next;//×¢ÒâË³Ðò
 	pos->next = newnode;
 }
+void SListErase(SLNode** pphead, SLNode* pos)
+{
+	assert(pphead);
+	assert(pos);
+	if (*pphead == pos)
+	{
+		SListPopFront(pphead);
+	}
+	else
+	{
+		SLNode* prev = *pphead;
+		while (prev->next != pos)
+		{
+			prev = prev->next;
+			assert(prev);
+		}
+		prev->next = pos->next;
+		free(pos);
+	}
+}
+void SListEraseAfter(SLNode* pos)
+{
+	assert(pos);
+	if (pos->next == NULL)
+	{
+		return;
+	}
+	else
+	{
+		SLNode* next = pos->next;
+		pos->next = next->next;
+		free(next);
+	}
+}
