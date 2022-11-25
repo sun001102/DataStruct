@@ -82,32 +82,118 @@ void Swap(int* p1, int* p2)
 //	QuickSort(a, begin, keyi - 1);
 //	QuickSort(a, keyi + 1, end);
 //}
+//int PartSort(int* a, int left, int right)
+//{
+//	int keyi = left;
+//	while (left < right)
+//	{
+//		while (left < right && a[right] >= a[keyi])
+//		{
+//			--right;
+//		}
+//		while (left < right && a[left <= a[keyi]])
+//		{
+//			++left;
+//		}
+//		if (left < right)
+//			Swap(&a[left], &a[right]);
+//	}
+//	Swap(&a[left], &a[keyi]);
+//	return left;
+//}
+//void QuickSort(int* a, int begin, int end)
+//{
+//	int keyi = PartSort(a, begin, end);
+//	if (begin >= end)
+//	{
+//		return;
+//	}
+//	QuickSort(a, begin, keyi - 1);
+//	QuickSort(a, keyi + 1, end);
+//}
+//1.Hoare
+//int PartSort(int* a,int left,int right)
+//{
+//	int keyi = left;
+//	while (left < right)
+//	{//RÕÒÐ¡
+//		while (left < right && a[right] >= a[keyi])
+//		{
+//			--right;
+//		}
+//		while (left < right && a[left] <= a[keyi])
+//		{
+//			++left;
+//		}
+//		if(left<right)
+//		Swap(&a[left], &a[right]);
+//	}//ÏàÓö
+//	Swap(&a[left], &a[keyi]);
+//	return left;
+//}
 int PartSort(int* a, int left, int right)
 {
-	int keyi = left;
+	int key = a[left];
+	int hole = left;
 	while (left < right)
-	{
-		while (left < right && a[right] >= a[keyi])
+	{//ÓÒ±ßÕÒ´ó£¬Ìîµ½×ó±ß¿Ó
+		while (left < right && a[right] >=a[key])
 		{
 			--right;
 		}
-		while (left < right && a[left <= a[keyi]])
+		a[hole] = a[right];
+		hole = right;
+		//×ó±ßÕÒÐ¡ Ìîµ½ÓÒ±ß¿Ó
+		while (left < right && a[left] <= a[key])
 		{
 			++left;
 		}
-		if (left < right)
-			Swap(&a[left], &a[right]);
+		a[hole] = a[left];
+		hole = left;
 	}
-	Swap(&a[left], &a[keyi]);
-	return left;
+	a[hole] = key;
+	return hole;
 }
-void QuickSort(int* a, int begin, int end)
+void QuickSort(int* a, int begin,int end)
 {
 	int keyi = PartSort(a, begin, end);
 	if (begin >= end)
 	{
 		return;
 	}
-	QuickSort(a, begin, keyi - 1);
-	QuickSort(a, keyi + 1, end);
+	PartSort(a, begin, keyi - 1);
+	PartSort(a, keyi + 1, end);
+}
+//
+//int PartSort(int* a, int begin, int end)
+//{
+//	int mid = GetMidIndex(a, left, right);
+//	Swap(&a[left], &a[right]);
+//	int keyi = left;
+//	int prev = left;
+//	int cur = left + 1;
+//	while (cur <= right)
+//	{
+//		if (a[cur] < a[keyi] && ++prev != cur)
+//			Swap(&a[cur], &a[prev]);
+//		++cur;
+//	}
+//	Swap(&a[keyi], &a[prev]);
+//	return prev;
+//}
+int PartSort(int* a, int left, int right)
+{
+	int keyi = a[left];
+	int prev = left;
+	int cur = left + 1;
+	while (cur <= right)
+	{
+		if (a[cur] < a[keyi] && ++prev != cur)
+		{
+			Swap(&a[cur], &a[prev]);
+			++cur;
+		}
+	}
+	Swap(&a[keyi], &a[prev]);
+	return prev;
 }
