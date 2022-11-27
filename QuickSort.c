@@ -154,6 +154,58 @@ int PartSort(int* a, int left, int right)
 	a[hole] = key;
 	return hole;
 }
+//前后指针法
+int PartSort3(int* a, int left, int right)
+{
+	int keyi = left;
+	int prev = left;
+	int cur = left + 1;
+	while (cur <= right)
+	{//cur遇到比key小的值 就停下来 ++prev,交换prev和cur 若prev=cur 不必交换
+ 		if (a[cur] < a[keyi] && ++prev != cur)
+		{
+			Swap(&a[cur], &a[prev]);
+			++cur;
+		}
+	}
+	Swap(&a[prev], &a[keyi]);
+	return prev;
+}
+//三数取中优化
+int GetMidIndex(int* a, int left, int right)
+{
+	int mid = (right + left) / 2;//中间值
+	if (a[left] < a[mid])
+	{
+		if (a[mid] < a[right])
+		{
+			return mid;
+		}
+		else if (a[left] > a[right])
+		{
+			return left;
+		}
+		else
+		{
+			return right;
+		}
+	}
+	else//a[left]>=a[mid]
+	{
+		if (a[mid] > a[right])
+		{
+			return mid;
+		}
+		else if (a[left] < a[right])
+		{
+			return left;
+		}
+		else
+		{
+			return right;
+		}
+	}
+}
 void QuickSort(int* a, int begin,int end)
 {
 	int keyi = PartSort(a, begin, end);
@@ -167,8 +219,6 @@ void QuickSort(int* a, int begin,int end)
 //
 //int PartSort(int* a, int begin, int end)
 //{
-//	int mid = GetMidIndex(a, left, right);
-//	Swap(&a[left], &a[right]);
 //	int keyi = left;
 //	int prev = left;
 //	int cur = left + 1;
@@ -183,6 +233,8 @@ void QuickSort(int* a, int begin,int end)
 //}
 int PartSort(int* a, int left, int right)
 {
+	int mid = GetMidIndex(a, left, right);
+	Swap(&a[left], &a[mid]);//三数取中优化
 	int keyi = a[left];
 	int prev = left;
 	int cur = left + 1;
